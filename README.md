@@ -1,2 +1,2 @@
 # adecom
-Administração Encomendas de Condomínio
+Administrar Encomendas de Condomínio
