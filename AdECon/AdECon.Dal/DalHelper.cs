@@ -1,5 +1,6 @@
 ﻿using AdECon.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
@@ -10,8 +11,10 @@ namespace AdECon.Dal
     public class DalHelper
     {
         private static SQLiteConnection sqliteConnection;
+
         public DalHelper()
         { }
+
         private static SQLiteConnection DbConnection()
         {
             string caminho = Directory.GetCurrentDirectory();
@@ -21,6 +24,7 @@ namespace AdECon.Dal
             sqliteConnection.Open();
             return sqliteConnection;
         }
+
         public static void CriarBancoSQLite()
         {
             try
@@ -32,6 +36,7 @@ namespace AdECon.Dal
                 throw;
             }
         }
+
         public static void CriarTabelaSQlite()
         {
             try
@@ -48,7 +53,7 @@ namespace AdECon.Dal
             }
         }
 
-        public static DataTable GetClientes()
+        public static List<Morador> GetClientes()
         {
             SQLiteDataAdapter da = null;
             DataTable dt = new DataTable();
@@ -59,7 +64,7 @@ namespace AdECon.Dal
                     cmd.CommandText = "SELECT * FROM Sedex";
                     da = new SQLiteDataAdapter(cmd.CommandText, DbConnection());
                     da.Fill(dt);
-                    return dt;
+                    return PreencheMoradorDt(dt);
                 }
             }
             catch (Exception ex)
@@ -67,10 +72,12 @@ namespace AdECon.Dal
                 throw new Exception(ex.Message);
             }
         }
-        public static DataTable GetCliente(int id)
+
+        public static Morador GetCliente(int id)
         {
             SQLiteDataAdapter da = null;
             DataTable dt = new DataTable();
+
             try
             {
                 using (var cmd = DbConnection().CreateCommand())
@@ -78,7 +85,9 @@ namespace AdECon.Dal
                     cmd.CommandText = "SELECT * FROM Sedex Where IdMorador=" + id;
                     da = new SQLiteDataAdapter(cmd.CommandText, DbConnection());
                     da.Fill(dt);
-                    return dt;
+
+                    var morador = PreencheMoradorDt(dt); 
+                    return morador[0];
                 }
             }
             catch (Exception ex)
@@ -86,7 +95,8 @@ namespace AdECon.Dal
                 throw new Exception(ex.Message);
             }
         }
-        public static void Add(Morador morador)
+
+        public static bool Add(Morador morador)
         {
             try
             {
@@ -107,6 +117,8 @@ namespace AdECon.Dal
                     cmd.Parameters.AddWithValue("@LocalPrateleira", morador.LocalPrateleira);
 
                     cmd.ExecuteNonQuery();
+
+                    return true;
                 }
             }
             catch (Exception ex)
@@ -114,7 +126,8 @@ namespace AdECon.Dal
                 throw new Exception(ex.Message);
             }
         }
-        public static void Update(Morador morador)
+
+        public static bool Update(Morador morador)
         {
             //try
             //{
@@ -134,8 +147,10 @@ namespace AdECon.Dal
             //{
             //    throw new Exception(ex.Message);
             //}
+            return true;
         }
-        public static void Delete(int Id)
+
+        public static bool Delete(int Id)
         {
             try
             {
@@ -144,12 +159,36 @@ namespace AdECon.Dal
                     cmd.CommandText = "DELETE FROM Sedex Where IdMorador=@Id";
                     cmd.Parameters.AddWithValue("@Id", Id);
                     cmd.ExecuteNonQuery();
+                    return true;
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        private static List<Morador> PreencheMoradorDt(DataTable data)
+        {
+            List<Morador> moradores = new List<Morador>();
+
+            foreach (DataRow row in data.Rows)
+            {
+                Morador morador = new Morador();
+
+                morador.IdMorador = int.Parse(data.Columns["IdMorador"].ToString());
+                morador.NomeDestinatario = data.Columns["NomeDestinatario"].ToString();
+                morador.Bloco = data.Columns["Bloco"].ToString();
+                morador.Apartamento = data.Columns["Apartamento"].ToString();
+                morador.email = data.Columns["email"].ToString();
+                morador.NumeroCelular = data.Columns["NumeroCelular"].ToString();
+                morador.CodigoBarraEtiqueta = data.Columns["CodigoBarraEtiqueta"].ToString();
+                morador.CodigoBarraEtiquetaLocal = data.Columns["CodigoBarraEtiquetaLocal"].ToString();
+                morador.LocalPrateleira = int.Parse(data.Columns["LocalPrateleira"].ToString());
+
+                moradores.Add(morador);
+            }
+            return moradores;
         }
     }
 }

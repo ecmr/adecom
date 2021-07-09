@@ -5,4 +5,9 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AdECon.Dal\AdECon.Dal.csproj" />
+    <ProjectReference Include="..\AdECon.Model\AdECon.Model.csproj" />
+  </ItemGroup>
+
 </Project>
