@@ -53,6 +53,8 @@ namespace AdECon
             this.incluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cnsultarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salvarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.carregarExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listView1 = new System.Windows.Forms.ListView();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -242,7 +244,8 @@ namespace AdECon
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.incluirToolStripMenuItem,
             this.cnsultarToolStripMenuItem,
-            this.salvarToolStripMenuItem});
+            this.salvarToolStripMenuItem,
+            this.carregarExcelToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(986, 24);
@@ -269,11 +272,29 @@ namespace AdECon
             this.salvarToolStripMenuItem.Text = "Salvar";
             this.salvarToolStripMenuItem.Click += new System.EventHandler(this.salvarToolStripMenuItem_Click);
             // 
+            // carregarExcelToolStripMenuItem
+            // 
+            this.carregarExcelToolStripMenuItem.Name = "carregarExcelToolStripMenuItem";
+            this.carregarExcelToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.carregarExcelToolStripMenuItem.Text = "Carregar Excel";
+            this.carregarExcelToolStripMenuItem.Click += new System.EventHandler(this.carregarExcelToolStripMenuItem_Click);
+            // 
+            // listView1
+            // 
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(29, 388);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(572, 192);
+            this.listView1.TabIndex = 19;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Tile;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(986, 473);
+            this.ClientSize = new System.Drawing.Size(986, 592);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtEtiquetaLocal);
             this.Controls.Add(this.label8);
@@ -322,6 +343,8 @@ namespace AdECon
         private System.Windows.Forms.ToolStripMenuItem cnsultarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salvarToolStripMenuItem;
         private System.Windows.Forms.Label lblMsgMorador;
+        private System.Windows.Forms.ToolStripMenuItem carregarExcelToolStripMenuItem;
+        private System.Windows.Forms.ListView listView1;
     }
 }
 
