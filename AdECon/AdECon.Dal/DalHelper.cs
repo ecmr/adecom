@@ -18,7 +18,7 @@ namespace AdECon.Dal
         private static SQLiteConnection DbConnection()
         {
             string caminho = Directory.GetCurrentDirectory();
-            string CaminhoRaiz = string.Concat(caminho.Substring(0, (caminho.Length - 20)), "\\dados\\Cadastro.sqlite");
+            string CaminhoRaiz = string.Concat(caminho.Substring(0, (caminho.Length - 20)), @"dados\Cadastro.sqlite3");
 
             sqliteConnection = new SQLiteConnection(string.Concat("Data Source=", CaminhoRaiz, "; Version=3;"));  //"Data Source=c:\\dados\\Cadastro.sqlite; Version=3;");
             sqliteConnection.Open();
@@ -43,7 +43,7 @@ namespace AdECon.Dal
             {
                 using (var cmd = DbConnection().CreateCommand())
                 {
-                    cmd.CommandText = "CREATE TABLE IF NOT EXISTS Sedex(IdMorador int, Bloco Varchar(2), Apartamento Varchar(3), NomeDestinatario Varchar(100), Email Varchar(100), NumeroCelular Varchar(11), CodigoBarraEtiqueta Varchar(50), CodigoBarraEtiquetaLocal Varchar(50), LocalPrateleira Varchar(3))";
+                    cmd.CommandText = "CREATE TABLE IF NOT EXISTS Sedex(IdMorador int, Bloco Varchar(2), Apartamento Varchar(3), NomeDestinatario Varchar(100), Email Varchar(100), NumeroCelular Varchar(11), CodigoBarraEtiqueta Varchar(50), CodigoBarraEtiquetaLocal Varchar(50), LocalPrateleira Varchar(3)), DataEnvioMensagem VARCHAR(20), Enviadosms VARCHAR(1), EnviadoZap VARCHAR(1), EnviadoTelegram VARCHAR(1), EnviadoEmail VARCHAR(1)";
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -102,8 +102,8 @@ namespace AdECon.Dal
             {
                 using (var cmd = DbConnection().CreateCommand())
                 {
-                    var query = @"INSERT INTO Sedex(IdMorador, Bloco , Apartamento , NomeDestinatario , Email , NumeroCelular , CodigoBarraEtiqueta , CodigoBarraEtiquetaLocal , LocalPrateleira)
-                                    values (@IdMorador, @Bloco , @Apartamento , @NomeDestinatario , @Email , @NumeroCelular , @CodigoBarraEtiqueta , @CodigoBarraEtiquetaLocal , @LocalPrateleira)";
+                    var query = @"INSERT INTO Sedex(IdMorador, Bloco , Apartamento , NomeDestinatario , Email , NumeroCelular , CodigoBarraEtiqueta , CodigoBarraEtiquetaLocal , LocalPrateleira, DataEnvioMensagem, Enviadosms, EnviadoZap, EnviadoTelegram, EnviadoEmail)
+                                    values (@IdMorador, @Bloco , @Apartamento , @NomeDestinatario , @Email , @NumeroCelular , @CodigoBarraEtiqueta , @CodigoBarraEtiquetaLocal , @LocalPrateleira, @DataEnvioMensagem, @Enviadosms, @EnviadoZap, @EnviadoTelegram, @EnviadoEmail)";
 
                     cmd.CommandText = query;
                     cmd.Parameters.AddWithValue("@IdMorador", morador.IdMorador);
@@ -115,6 +115,13 @@ namespace AdECon.Dal
                     cmd.Parameters.AddWithValue("@CodigoBarraEtiqueta", morador.CodigoBarraEtiqueta);
                     cmd.Parameters.AddWithValue("@CodigoBarraEtiquetaLocal", morador.CodigoBarraEtiquetaLocal);
                     cmd.Parameters.AddWithValue("@LocalPrateleira", morador.LocalPrateleira);
+                    
+                    cmd.Parameters.AddWithValue("@DataEnvioMensagem", morador.DataEnvioMensagem);
+                    cmd.Parameters.AddWithValue("@Enviadosms", morador.Enviadosms);
+                    cmd.Parameters.AddWithValue("@EnviadoZap", morador.EnviadoZap);
+                    cmd.Parameters.AddWithValue("@EnviadoTelegram", morador.EnviadoTelegram);
+                    cmd.Parameters.AddWithValue("@EnviadoEmail", morador.EnviadoEmail);
+                    
 
                     cmd.ExecuteNonQuery();
 

@@ -13,5 +13,12 @@ namespace AdECon.Model
         public string CodigoBarraEtiqueta { get; set; }
         public string CodigoBarraEtiquetaLocal { get; set; }
         public int LocalPrateleira { get; set; }
+        public int EncomendaAlimento { get; set; }
+        public int EncomendaMedicamento { get; set; }
+        public string DataEnvioMensagem { get; set; }
+        public string Enviadosms { get; set; }
+        public string EnviadoZap { get; set; }
+        public string EnviadoTelegram { get; set; }
+        public string EnviadoEmail { get; set; }
     }
 }
